@@ -1,0 +1,1 @@
+Error: 2019/11/18 23:37:55 migration.go:32: Failed to prepare sql statement:  Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'EXIST users(id INT(10) PRIMARY KEY,created_at TIMESTAMP,deleted_at TIMESTAMP,use' at line 1
