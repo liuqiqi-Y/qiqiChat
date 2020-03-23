@@ -26,7 +26,8 @@ func (service *UserLoginService) setSession(c *gin.Context, user model.User) {
 func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
 	var user model.User
 
-	err := model.DB.QueryRow(`SELECT password_digest FROM users WHERE user_name = ?`, service.UserName).Scan(&user.PasswordDigest)
+	err := model.DB.QueryRow(`SELECT user_name, password_digest, id, status, created_at FROM user WHERE user_name = ? AND status = 1`, service.UserName).Scan(&user.UserName,
+		&user.PasswordDigest, &user.ID, &user.Status, &user.CreatedAt)
 	if err != nil {
 		return serializer.ParamErr("账号或密码错误", nil)
 	}

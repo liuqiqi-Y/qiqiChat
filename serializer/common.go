@@ -7,7 +7,7 @@ type Response struct {
 	Code  int         `json:"code"`
 	Data  interface{} `json:"data,omitempty"`
 	Msg   string      `json:"msg"`
-	Error string      `json:"error,omitempty"`
+	Error string      `json:"-"`
 }
 
 // TrackedErrorResponse 有追踪信息的错误响应
@@ -22,7 +22,7 @@ type TrackedErrorResponse struct {
 // 四开头的五位数错误编码为客户端错误，有时候是客户端代码写错了，有时候是用户操作错误
 const (
 	// CodeCheckLogin 未登录
-	CodeCheckLogin = 401
+	CodeCheckLogin = 40000
 	// CodeNoRightErr 未授权访问
 	CodeNoRightErr = 403
 	// CodeDBError 数据库操作失败
@@ -37,7 +37,7 @@ const (
 func CheckLogin() Response {
 	return Response{
 		Code: CodeCheckLogin,
-		Msg:  "未登录",
+		Msg:  "请先登录",
 	}
 }
 

@@ -2,7 +2,6 @@ package conf
 
 import (
 	"os"
-	"qiqiChat/cache"
 	"qiqiChat/model"
 	"qiqiChat/util"
 
@@ -12,7 +11,7 @@ import (
 // Init 初始化配置项
 func Init() {
 	// 从本地读取环境变量
-	godotenv.Load()
+	godotenv.Load("env")
 
 	// 设置日志级别
 	util.SetLogLevel(os.Getenv("LOG_LEVEL"))
@@ -23,6 +22,7 @@ func Init() {
 	}
 
 	// 连接数据库
+	//fmt.Println("===>", os.Getenv("MYSQL_DSN"))
 	model.InitDB(os.Getenv("MYSQL_DSN"))
-	cache.Redis()
+	//cache.Redis()
 }

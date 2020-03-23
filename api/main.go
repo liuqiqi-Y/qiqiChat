@@ -34,7 +34,7 @@ func ErrorResponse(err error) serializer.Response {
 	if ve, ok := err.(validator.ValidationErrors); ok {
 		for _, e := range ve {
 			field := conf.T(fmt.Sprintf("Field.%s", e.Field))
-			tag := conf.T(fmt.Sprintf("Tag.Valid.%s", e.Tag))
+			tag := conf.T(fmt.Sprintf("Tag.%s", e.Tag))
 			return serializer.ParamErr(
 				fmt.Sprintf("%s%s", field, tag),
 				err,

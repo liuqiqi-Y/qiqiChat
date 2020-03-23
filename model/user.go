@@ -9,24 +9,24 @@ import (
 
 // User 用户模型
 type User struct {
-	ID             uint
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
-	DeletedAt      time.Time
+	ID        uint
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	//DeletedAt      time.Time
 	UserName       string
 	PasswordDigest string
-	Nickname       string
-	Status         string
-	Avatar         string
+	//Nickname       string
+	Status int
+	//Avatar         string
 }
 
 const (
 	// PassWordCost 密码加密难度
 	PassWordCost = 12
 	// Active 激活用户
-	Active string = "active"
+	Active int = 1
 	// Inactive 未激活用户
-	Inactive string = "inactive"
+	Inactive int = 0
 	// Suspend 被封禁用户
 	Suspend string = "suspend"
 )
@@ -34,7 +34,7 @@ const (
 // GetUser 用ID获取用户
 func GetUser(ID interface{}) (User, error) {
 	var user User
-	err := DB.QueryRow(`SELECT id, created_at, deleted_at, user_name, password_digest, nick_name, status, avatar FROM users WHERE id = ?`, ID).Scan(&user.ID, &user.CreatedAt, &user.DeletedAt, &user.UserName, &user.PasswordDigest, &user.Nickname, &user.Status, &user.Avatar)
+	err := DB.QueryRow(`SELECT id, created_at, updated_at, user_name, password_digest, status FROM user WHERE id = ?`, ID).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt, &user.UserName, &user.PasswordDigest, &user.Status)
 	if err != nil {
 		util.Err.Println("Faile to User information: ", err.Error())
 	}

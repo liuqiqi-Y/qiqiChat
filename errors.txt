@@ -1,1 +1,27 @@
 Error: 2019/11/18 23:37:55 migration.go:32: Failed to prepare sql statement:  Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'EXIST users(id INT(10) PRIMARY KEY,created_at TIMESTAMP,deleted_at TIMESTAMP,use' at line 1
+Error: 2020/03/21 10:57:27 init.go:25: Failed to connect database:  Error 1045: Access denied for user ''@'localhost' (using password: NO)
+Error: 2020/03/21 10:58:09 init.go:25: Failed to connect database:  Error 1045: Access denied for user ''@'localhost' (using password: NO)
+Error: 2020/03/21 10:58:45 init.go:25: Failed to connect database:  Error 1045: Access denied for user ''@'localhost' (using password: NO)
+Error: 2020/03/21 10:59:06 init.go:25: Failed to connect database:  Error 1045: Access denied for user ''@'localhost' (using password: NO)
+Error: 2020/03/21 11:01:12 init.go:25: Failed to connect database:  Error 1045: Access denied for user ''@'localhost' (using password: NO)
+Error: 2020/03/21 11:05:50 main.go:40: 连接Redis不成功 dial tcp: missing address
+Error: 2020/03/21 11:14:40 user_register_service.go:61: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:15:49 user_register_service.go:61: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:23:57 user_register_service.go:61: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:29:59 user_register_service.go:61: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:30:59 user_register_service.go:61: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:39:17 user_register_service.go:61: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:48:29 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 11:52:19 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 14:21:22 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 14:24:45 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 14:27:01 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 14:27:43 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 14:29:11 migration.go:25: Failed to prepare sql statement:  Error 1046: No database selected
+Error: 2020/03/21 14:30:55 user_register_service.go:67: Failed to insert data:  Error 1366: Incorrect integer value: 'active' for column 'status' at row 1
+Error: 2020/03/21 14:47:24 user_register_service.go:69: Failed to insert data:  Error 1062: Duplicate entry 'administrator' for key 'user_name'
+Error: 2020/03/21 14:49:11 user_register_service.go:69: Failed to insert data:  Error 1062: Duplicate entry 'administrator' for key 'user_name'
+Error: 2020/03/21 23:38:53 group.go:23: failed to get group info: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group' at line 2
+Error: 2020/03/21 23:41:26 group.go:22: failed to get group info: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group' at line 1
+Error: 2020/03/23 20:10:45 staff.go:24: Failed to prepare sql statement:  Error 1136: Column count doesn't match value count at row 1
+Error: 2020/03/23 20:12:31 staff.go:24: Failed to prepare sql statement:  Error 1136: Column count doesn't match value count at row 1

@@ -6,10 +6,10 @@ import "qiqiChat/model"
 type User struct {
 	ID        uint   `json:"id"`
 	UserName  string `json:"user_name"`
-	Nickname  string `json:"nickname"`
-	Status    string `json:"status"`
-	Avatar    string `json:"avatar"`
-	CreatedAt int64  `json:"created_at"`
+	Nickname  string `json:"-"`
+	Status    int    `json:"status"`
+	Avatar    string `json:"-"`
+	CreatedAt string `json:"created_at"`
 }
 
 // BuildUser 序列化用户
@@ -17,10 +17,8 @@ func BuildUser(user model.User) User {
 	return User{
 		ID:        user.ID,
 		UserName:  user.UserName,
-		Nickname:  user.Nickname,
 		Status:    user.Status,
-		Avatar:    user.Avatar,
-		CreatedAt: user.CreatedAt.Unix(),
+		CreatedAt: user.CreatedAt.Format("2006-01-02 15:04:05"),
 	}
 }
 

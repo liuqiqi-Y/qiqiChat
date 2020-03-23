@@ -4,11 +4,11 @@ import (
 	"qiqiChat/model"
 	"qiqiChat/serializer"
 	"qiqiChat/util"
+	"time"
 )
 
 // UserRegisterService 管理用户注册服务
 type UserRegisterService struct {
-	Nickname        string `form:"nickname" json:"nickname" binding:"required,min=2,max=30"`
 	UserName        string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
 	Password        string `form:"password" json:"password" binding:"required,min=8,max=40"`
 	PasswordConfirm string `form:"password_confirm" json:"password_confirm" binding:"required,min=8,max=40"`
@@ -24,19 +24,7 @@ func (service *UserRegisterService) valid() *serializer.Response {
 	}
 
 	count := 0
-	//model.DB.Model(&model.User{}).Where("nickname = ?", service.Nickname).Count(&count)
-	row := model.DB.QueryRow(`SELECT COUNT(*) FROM users WHERE nick_name = ?`, service.Nickname)
-	row.Scan(&count)
-	if count > 0 {
-		return &serializer.Response{
-			Code: 40001,
-			Msg:  "昵称被占用",
-		}
-	}
-
-	count = 0
-	//model.DB.Model(&model.User{}).Where("user_name = ?", service.UserName).Count(&count)
-	row = model.DB.QueryRow(`SELECT COUNT(*) FROM users WHERE user_name = ?`, service.UserName)
+	row := model.DB.QueryRow(`SELECT COUNT(*) FROM user WHERE user_name = ? AND status = 1`, service.UserName)
 	row.Scan(&count)
 	if count > 0 {
 		return &serializer.Response{
@@ -50,9 +38,9 @@ func (service *UserRegisterService) valid() *serializer.Response {
 // Register 用户注册
 func (service *UserRegisterService) Register() serializer.Response {
 	user := model.User{
-		Nickname: service.Nickname,
-		UserName: service.UserName,
-		Status:   model.Active,
+		UserName:  service.UserName,
+		Status:    model.Active,
+		CreatedAt: time.Now(),
 	}
 
 	// 表单验证
@@ -70,16 +58,17 @@ func (service *UserRegisterService) Register() serializer.Response {
 	}
 
 	// 创建用户
-	stmt, err := model.DB.Prepare(`INSERT INTO users(nick_name, user_name, status) VALUES(?,?,?)`)
+	stmt, err := model.DB.Prepare(`INSERT INTO user(user_name, password_digest, status) VALUES(?,?,?)`)
 	if err != nil {
 		util.Err.Println("Failed to prepare sql statement: ", err.Error())
 		return serializer.Err(serializer.CodeDBError, "注册失败", err)
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(user.Nickname, user.UserName, user.Status)
+	_, err = stmt.Exec(user.UserName, user.PasswordDigest, user.Status)
 	if err != nil {
 		util.Err.Println("Failed to insert data: ", err.Error())
 		return serializer.Err(serializer.CodeDBError, "注册失败", err)
 	}
+	_ = model.DB.QueryRow(`SELECT id FROM user WHERE user_name = ?`, user.UserName).Scan(&user.ID)
 	return serializer.BuildUserResponse(user)
 }

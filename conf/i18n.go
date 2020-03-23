@@ -22,13 +22,13 @@ func LoadLocales(path string) error {
 	if err != nil {
 		return err
 	}
-
+	//fmt.Printf("===>%v", m)
 	Dictinary = &m
 
 	return nil
 }
 
-// T 翻译
+// T 翻译 Tag.Valid.min
 func T(key string) string {
 	dic := *Dictinary
 	keys := strings.Split(key, ".")
