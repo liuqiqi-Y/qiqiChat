@@ -8,7 +8,7 @@ type Staff struct {
 	Number    string `json:"number"`
 	Email     string `json:"email"`
 	GroupID   uint   `json:"group_id"`
-	CreatedAt string `json:"created_at"`
+	CreatedAt string `json:"created_at,omitempty"`
 	Status    int    `json:"status"`
 }
 
@@ -23,9 +23,18 @@ func buildStaff(staff model.Staff) Staff {
 		Status:    staff.Status,
 	}
 }
-
+func StaffesResponse(staffes []model.Staff) Response {
+	var s []Staff
+	for _, v := range staffes {
+		s = append(s, buildStaff(v))
+	}
+	return Response{
+		Data: s,
+	}
+}
 func StaffResponse(staff model.Staff) Response {
 	return Response{
 		Data: buildStaff(staff),
+		Msg:  "员工信息修改成共",
 	}
 }

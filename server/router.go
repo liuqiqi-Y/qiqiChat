@@ -22,7 +22,7 @@ func NewRouter() *gin.Engine {
 	{
 		v1.POST("/ping", api.Ping)
 
-		// 用户登录
+		// 用户注册
 		v1.POST("/user/register", api.UserRegister)
 
 		// 用户登录
@@ -42,6 +42,8 @@ func NewRouter() *gin.Engine {
 
 			auth.POST("/staff/increasement", api.AddStaff)
 			auth.DELETE("/staff/decreasement/:StaffID", api.DelStaff)
+			auth.PUT("/staff/modify", api.UpdateStaff)
+			auth.GET("/staff/info/:GroupID", api.GetStaffes)
 		}
 	}
 	return r

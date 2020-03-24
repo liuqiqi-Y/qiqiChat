@@ -48,4 +48,4 @@ CREATE TABLE `user` (
     `status` tinyint NOT NULL COMMENT '状态 1存在 0删除',
     UNIQUE (`user_name`),
     PRIMARY KEY (`id`)
-)
+);

@@ -38,14 +38,14 @@ func InsertGroup(name string) (Group, error) {
 	tx, _ := DB.Begin()
 	stmt, err := tx.Prepare("INSERT INTO `group`(`name`, `status`) VALUES(?,?)")
 	if err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		util.Err.Println("Failed to prepare sql statement: ", err.Error())
 		return Group{}, err
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(name, 1)
 	if err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		util.Err.Println("Failed to insert a group: ", err.Error())
 		return Group{}, err
 	}

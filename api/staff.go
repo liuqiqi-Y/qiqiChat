@@ -25,3 +25,21 @@ func DelStaff(c *gin.Context) {
 	res := service.DelStaff(uint(id))
 	c.JSON(200, res)
 }
+func UpdateStaff(c *gin.Context) {
+	var service service.StaffUpdate
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UpdateStaff()
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+func GetStaffes(c *gin.Context) {
+	s := c.Param("GroupID")
+	id, err := strconv.Atoi(s)
+	if err != nil {
+		c.JSON(200, ErrorResponse(nil))
+	}
+	res := service.GetStaffes(uint(id))
+	c.JSON(200, res)
+}
