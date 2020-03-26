@@ -28,3 +28,6 @@ Error: 2020/03/23 20:12:31 staff.go:24: Failed to prepare sql statement:  Error 
 Error: 2020/03/24 09:51:26 staff.go:111: failed to update: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'status` = 1 AND id = ?' at line 1
 Error: 2020/03/24 09:52:46 staff.go:113: failed to update: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'status` = 1 AND id = ?' at line 1
 Error: 2020/03/24 10:38:32 staff.go:128: failed to update: Error 1054: Unknown column 'created_id' in 'field list'
+Error: 2020/03/25 15:09:43 product.go:23: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OFFEST ?' at line 1
+Error: 2020/03/25 18:53:18 product.go:43: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`name` = ?' at line 1
+Error: 2020/03/26 18:12:45 product.go:87: failed to update

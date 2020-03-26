@@ -44,6 +44,12 @@ func NewRouter() *gin.Engine {
 			auth.DELETE("/staff/decreasement/:StaffID", api.DelStaff)
 			auth.PUT("/staff/modify", api.UpdateStaff)
 			auth.GET("/staff/info/:GroupID", api.GetStaffes)
+
+			auth.GET("/products/:characteristic/info", api.GetProducts)
+			auth.GET("/products/:characteristic/oneInfo", api.GetProductByName)
+			auth.GET("/products/:characteristic/infoByTime", api.GetProductByTime)
+			auth.PUT("/products/:characteristic/modification", api.ModifyProductCount)
+			auth.POST("/products/:characteristic/increasement", api.AddProduct)
 		}
 	}
 	return r
