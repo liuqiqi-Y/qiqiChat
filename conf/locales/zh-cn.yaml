@@ -11,3 +11,4 @@ Field:
   Password: "密码"
   PasswordConfirm: "密码校验"
   Email: "邮箱"
+  Identification: "账户类别"

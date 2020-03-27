@@ -113,6 +113,6 @@ func (p *ProductAdd) AddProduct() serializer.Response {
 	return serializer.ProductResponse(product)
 }
 func DelProduct(name string, character int) serializer.Response {
-
+	//model.CheckProductByName(name, character)
 	return serializer.Response{}
 }
