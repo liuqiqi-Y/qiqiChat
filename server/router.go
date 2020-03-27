@@ -15,7 +15,7 @@ func NewRouter() *gin.Engine {
 	// 中间件, 顺序不能改
 	r.Use(middleware.Session(os.Getenv("SESSION_SECRET")))
 	//r.Use(middleware.Cors())
-	r.Use(middleware.CurrentUser())
+	r.Use(middleware.CurrentUser()) //从session中获取userID，然后从数据库中获取用户信息存储在c.Context中。
 
 	// 路由
 	v1 := r.Group("/api/v1")

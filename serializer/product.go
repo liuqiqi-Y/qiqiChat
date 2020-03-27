@@ -3,13 +3,13 @@ package serializer
 import "qiqiChat/model"
 
 type Product struct {
-	ID             uint   `json:"id"`
-	Name           string `json:"name"`
-	Characteristic int    `json:"characteristic"`
-	Quantity       int    `json:"quantity"`
-	Used           int    `json:"used"`
-	CreatedAt      string `json:"created_at"`
-	Status         int    `json:"status"`
+	ID             uint   `json:"id,omitempty"`
+	Name           string `json:"name,omitempty"`
+	Characteristic int    `json:"characteristic,omitempty"`
+	Quantity       int    `json:"quantity,omitempty"`
+	Used           int    `json:"used,omitempty"`
+	CreatedAt      string `json:"created_at,omitempty"`
+	Status         int    `json:"status,omitempty"`
 }
 
 func buildProduct(p model.Product) Product {

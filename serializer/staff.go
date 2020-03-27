@@ -3,13 +3,13 @@ package serializer
 import "qiqiChat/model"
 
 type Staff struct {
-	ID        uint   `json:"id"`
-	Name      string `json:"name"`
-	Number    string `json:"number"`
-	Email     string `json:"email"`
-	GroupID   uint   `json:"group_id"`
+	ID        uint   `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	Number    string `json:"number,omitempty"`
+	Email     string `json:"email,omitempty"`
+	GroupID   uint   `json:"group_id,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
-	Status    int    `json:"status"`
+	Status    int    `json:"status,omitempty"`
 }
 
 func buildStaff(staff model.Staff) Staff {

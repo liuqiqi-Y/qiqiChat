@@ -81,7 +81,11 @@ func GetStaffes(id uint) serializer.Response {
 	}
 	exist = model.CheckStaffByGroupID(id)
 	if exist == false {
-		return serializer.Err(40004, "该分组还没有员工", nil)
+		return serializer.Response{
+			Code: 0,
+			Data: []serializer.Staff{},
+			Msg:  "该分组没有员工",
+		}
 	}
 	staffes, err := model.GetStaffes(id)
 	if err != nil {

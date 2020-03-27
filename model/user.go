@@ -16,7 +16,8 @@ type User struct {
 	UserName       string
 	PasswordDigest string
 	//Nickname       string
-	Status int
+	Status         int
+	Identification string
 	//Avatar         string
 }
 
@@ -34,7 +35,7 @@ const (
 // GetUser 用ID获取用户
 func GetUser(ID interface{}) (User, error) {
 	var user User
-	err := DB.QueryRow(`SELECT id, created_at, updated_at, user_name, password_digest, status FROM user WHERE id = ?`, ID).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt, &user.UserName, &user.PasswordDigest, &user.Status)
+	err := DB.QueryRow("SELECT `id`, `created_at`, `updated_at`, `user_name`, `password_digest`, `status`, `identification` FROM user WHERE id = ?", ID).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt, &user.UserName, &user.PasswordDigest, &user.Status, &user.Identification)
 	if err != nil {
 		util.Err.Println("Faile to User information: ", err.Error())
 	}

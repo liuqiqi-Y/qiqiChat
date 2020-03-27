@@ -118,3 +118,25 @@ func AddProduct(name string, quantity int, character int) (Product, error) {
 	tx.Commit()
 	return p, nil
 }
+func DelProduct(name string, character int) bool {
+	result, err := DB.Exec("UPDATE `product` SET `status` = 0 WHERE `name` = ? AND `characteristic` = ?", name, character)
+	if err != nil {
+		util.Err.Printf("failed to update: %s\n", err.Error())
+		return false
+	}
+	affect, _ := result.RowsAffected()
+	if affect == 0 {
+		util.Err.Println("failed to update")
+		return false
+	}
+	return true
+}
+
+func CheckProductBytime(begin string, end string) bool {
+	count := 0
+	_ = DB.QueryRow("SELECT COUNT(*) FROM `record` WHERE `type` = 1 AND `time` BETWEEN ? AND ?", begin, end).Scan(&count)
+	if count > 0 {
+		return true
+	}
+	return false
+}

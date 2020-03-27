@@ -4,10 +4,10 @@ import "qiqiChat/model"
 
 // Group 分组序列化器
 type Group struct {
-	ID        uint   `json:"id"`
-	GroupName string `json:"group_name"`
-	CreatedAt string `json:"created_at"`
-	Status    int    `json:"status"`
+	ID        uint   `json:"id,omitempty"`
+	GroupName string `json:"group_name,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Status    int    `json:"status,omitempty"`
 }
 
 // BuildGroups 序列化分组

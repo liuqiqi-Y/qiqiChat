@@ -31,13 +31,17 @@ func GetProducts(c *gin.Context) {
 func GetProductByName(c *gin.Context) {
 	var p service.ProductByName
 	character := c.Param("characteristic")
-	name := c.Query("name")
-	var err error
+	err := c.ShouldBind(&p)
+	if err != nil {
+		c.JSON(200, ErrorResponse(err))
+	}
+	//name := c.Query("name")
+
 	p.Character, err = strconv.Atoi(character)
 	if err != nil {
 		c.JSON(200, ErrorResponse(nil))
 	}
-	p.Name = name
+	//p.Name = name
 	res := p.GetProductByName()
 	c.JSON(200, res)
 }

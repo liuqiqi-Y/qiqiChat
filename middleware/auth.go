@@ -23,11 +23,11 @@ func CurrentUser() gin.HandlerFunc {
 	}
 }
 
-// AuthRequired 需要登录
+// AuthRequired 管理员权限
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if user, _ := c.Get("user"); user != nil {
-			if _, ok := user.(*model.User); ok {
+			if v, ok := user.(*model.User); ok && v.Identification == "admin" {
 				c.Next()
 				return
 			}

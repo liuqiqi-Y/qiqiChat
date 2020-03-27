@@ -23,7 +23,7 @@ func (p *ProductInfo) GetProducts() serializer.Response {
 }
 
 type ProductByName struct {
-	Name      string
+	Name      string `form:"name" json:"name" binding:"required"`
 	Character int
 }
 
@@ -33,7 +33,11 @@ func (p *ProductByName) GetProductByName() serializer.Response {
 	}
 	exist := model.CheckProductByName(p.Name, p.Character)
 	if exist == false {
-		return serializer.Err(40003, "没有该物品", nil)
+		return serializer.Response{
+			Code: 0,
+			Data: serializer.Product{},
+			Msg:  "没有该物品",
+		}
 	}
 	product, err := model.GetProductByName(p.Name, p.Character)
 	if err != nil {
@@ -53,6 +57,16 @@ type ProductsByTime struct {
 func (p *ProductsByTime) GetProductsByTime() serializer.Response {
 	if p.Index <= 0 || p.Size <= 0 || (p.Character != 0 && p.Character != 1) {
 		return serializer.ParamErr("", nil)
+	}
+	if p.Begin != "" && p.End != "" {
+		exist := model.CheckProductBytime(p.Begin, p.End)
+		if exist == false {
+			return serializer.Response{
+				Code: 0,
+				Data: []model.Product{},
+				Msg:  "该时间段没有物品消耗",
+			}
+		}
 	}
 	products, err := model.GetProductsByTime(p.Index, p.Size, p.Character, p.Begin, p.End)
 	if err != nil {
@@ -97,4 +111,8 @@ func (p *ProductAdd) AddProduct() serializer.Response {
 		return serializer.DBErr("", nil)
 	}
 	return serializer.ProductResponse(product)
+}
+func DelProduct(name string, character int) serializer.Response {
+
+	return serializer.Response{}
 }
