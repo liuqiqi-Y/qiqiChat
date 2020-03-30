@@ -14,6 +14,7 @@ type Product struct {
 	Created_at     time.Time
 	Updated_at     time.Time
 	Status         int
+	//Count          int
 }
 
 func GetProducts(index, size, chararcter int) ([]Product, error) {
@@ -47,7 +48,7 @@ func GetProductByName(name string, character int) (Product, error) {
 }
 func CheckProductByName(name string, character int) bool {
 	count := 0
-	_ = DB.QueryRow("SELECT COUNT(*) FROM `product` WHERE `name` = ? AND `characteristic` = ? AND `status` = 1", character, name).Scan(&count)
+	_ = DB.QueryRow("SELECT COUNT(*) FROM `product` WHERE `name` = ? AND `characteristic` = ? AND `status` = 1", name, character).Scan(&count)
 	if count > 0 {
 		return true
 	}
@@ -139,4 +140,30 @@ func CheckProductBytime(begin string, end string) bool {
 		return true
 	}
 	return false
+}
+func CheckProductCount(character int) int {
+	count := 0
+	_ = DB.QueryRow("SELECT COUNT(*) FROM `product` WHERE `status` = 1 AND `characteristic` = ?", character).Scan(&count)
+	return count
+}
+
+func ModifyProductName(oldName string, newName string, character int) (Product, error) {
+	var product Product
+	tx, _ := DB.Begin()
+	result, err := tx.Exec("UPDATE `product` SET `name` = ? WHERE `name` = ? AND `characteristic` = ? AND `status` = 1", newName, oldName, character)
+	if err != nil {
+		_ = tx.Rollback()
+		util.Err.Printf("failed to update: %s\n", err.Error())
+		return Product{}, err
+	}
+	affect, _ := result.RowsAffected()
+	if affect == 0 {
+		_ = tx.Rollback()
+		util.Err.Printf("failed to update: %s\n", err.Error())
+		return Product{}, err
+	}
+	_ = tx.QueryRow("SELECT `id`, `name`, `characteristic`, `quantity`, `used`, `created_at`, `status` FROM `product` WHERE `status` = 1 AND `characteristic` = ?  AND `name` = ?", character, newName).Scan(
+		&product.ID, &product.Name, &product.Characteristic, &product.Quantity, &product.Used, &product.Created_at, &product.Status)
+	tx.Commit()
+	return product, nil
 }

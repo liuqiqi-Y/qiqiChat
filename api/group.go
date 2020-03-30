@@ -27,6 +27,7 @@ func DelGroup(c *gin.Context) {
 	id, err := strconv.Atoi(s)
 	if err != nil {
 		c.JSON(200, ErrorResponse(nil))
+		return
 	}
 	res := service.DelGroup(uint(id))
 	c.JSON(200, res)

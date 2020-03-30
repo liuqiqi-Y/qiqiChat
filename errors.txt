@@ -31,3 +31,12 @@ Error: 2020/03/24 10:38:32 staff.go:128: failed to update: Error 1054: Unknown c
 Error: 2020/03/25 15:09:43 product.go:23: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OFFEST ?' at line 1
 Error: 2020/03/25 18:53:18 product.go:43: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`name` = ?' at line 1
 Error: 2020/03/26 18:12:45 product.go:87: failed to update
+Error: 2020/03/27 15:07:57 product.go:129: failed to update
+Error: 2020/03/27 15:08:17 product.go:129: failed to update
+Error: 2020/03/27 15:11:41 product.go:129: failed to update
+Error: 2020/03/27 17:48:42 product.go:44: failed to query: sql: no rows in result set
+Error: 2020/03/29 22:30:12 record.go:56: failed to query: Error 1054: Unknown column '测试组' in 'where clause'
+Error: 2020/03/29 22:32:48 record.go:56: failed to query: Error 1054: Unknown column '测试组' in 'where clause'
+Error: 2020/03/29 22:40:34 record.go:58: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.`name` = 'Jerry' GROUP BY g.`name`, p.`name` HAVING p.`name` IN (SELECT ' at line 1
+Error: 2020/03/29 22:40:48 record.go:58: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.`name` = 'Jerry' GROUP BY g.`name`, p.`name` HAVING p.`name` IN (SELECT ' at line 1
+Error: 2020/03/29 22:41:34 record.go:58: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.`name` = 'Jerry' GROUP BY g.`name`, p.`name` HAVING p.`name` IN (SELECT ' at line 1

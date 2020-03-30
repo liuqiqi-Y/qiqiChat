@@ -11,6 +11,13 @@ type GroupInfo struct {
 
 func (g *GroupInfo) GetGroups() serializer.Response {
 	groups, err := model.GetGroups()
+	if len(groups) == 0 {
+		return serializer.Response{
+			Code: 0,
+			Data: []serializer.Group{},
+			Msg:  "没有分组",
+		}
+	}
 	if err != nil {
 		return serializer.DBErr("", err)
 	}

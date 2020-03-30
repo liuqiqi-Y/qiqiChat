@@ -15,16 +15,24 @@ func (p *ProductInfo) GetProducts() serializer.Response {
 	if p.Index <= 0 || p.Size <= 0 || (p.Character != 0 && p.Character != 1) {
 		return serializer.ParamErr("", nil)
 	}
+	count := model.CheckProductCount(p.Character)
+	if count <= 0 {
+		return serializer.Response{
+			Code: 0,
+			Data: serializer.ProductList{},
+			Msg:  "没有物品库存",
+		}
+	}
 	products, err := model.GetProducts(p.Index, p.Size, p.Character)
 	if err != nil {
 		return serializer.DBErr("", nil)
 	}
-	return serializer.ProductsResponse(products)
+	return serializer.ProductsResponse(products, count, p.Size)
 }
 
 type ProductByName struct {
 	Name      string `form:"name" json:"name" binding:"required"`
-	Character int
+	Character int    //`path:"characteristic"`
 }
 
 func (p *ProductByName) GetProductByName() serializer.Response {
@@ -35,7 +43,7 @@ func (p *ProductByName) GetProductByName() serializer.Response {
 	if exist == false {
 		return serializer.Response{
 			Code: 0,
-			Data: serializer.Product{},
+			Data: serializer.ProductEmpty{},
 			Msg:  "没有该物品",
 		}
 	}
@@ -58,6 +66,7 @@ func (p *ProductsByTime) GetProductsByTime() serializer.Response {
 	if p.Index <= 0 || p.Size <= 0 || (p.Character != 0 && p.Character != 1) {
 		return serializer.ParamErr("", nil)
 	}
+
 	if p.Begin != "" && p.End != "" {
 		exist := model.CheckProductBytime(p.Begin, p.End)
 		if exist == false {
@@ -72,7 +81,7 @@ func (p *ProductsByTime) GetProductsByTime() serializer.Response {
 	if err != nil {
 		return serializer.DBErr("", nil)
 	}
-	return serializer.ProductsResponse(products)
+	return serializer.ProductsResponse(products, 0, 0)
 }
 
 type ProductCount struct {
@@ -112,7 +121,41 @@ func (p *ProductAdd) AddProduct() serializer.Response {
 	}
 	return serializer.ProductResponse(product)
 }
-func DelProduct(name string, character int) serializer.Response {
-	//model.CheckProductByName(name, character)
-	return serializer.Response{}
+func (p *ProductByName) DelProduct() serializer.Response {
+	if p.Character != 0 && p.Character != 1 {
+		return serializer.ParamErr("", nil)
+	}
+	exist := model.CheckProductByName(p.Name, p.Character)
+	if exist == false {
+		return serializer.Err(40003, "该物品并不存在", nil)
+	}
+	success := model.DelProduct(p.Name, p.Character)
+	if success == false {
+		return serializer.DBErr("删除失败", nil)
+	}
+	return serializer.Response{
+		Code: 0,
+		Msg:  "删除成功",
+	}
+}
+
+type ProductName struct {
+	OldName   string `form:"old_name" binding:"required"`
+	NewName   string `form:"new_name" binding:"required"`
+	Character int
+}
+
+func (p *ProductName) ModifyProductName() serializer.Response {
+	if p.Character != 0 && p.Character != 1 {
+		return serializer.ParamErr("", nil)
+	}
+	exist := model.CheckProductByName(p.OldName, p.Character)
+	if exist == false {
+		return serializer.Err(40003, "无此类别，请重新输入。", nil)
+	}
+	product, err := model.ModifyProductName(p.OldName, p.NewName, p.Character)
+	if err != nil {
+		return serializer.DBErr("更新失败", nil)
+	}
+	return serializer.ProductResponse(product)
 }

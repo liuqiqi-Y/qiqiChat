@@ -21,6 +21,7 @@ func DelStaff(c *gin.Context) {
 	id, err := strconv.Atoi(s)
 	if err != nil {
 		c.JSON(200, ErrorResponse(nil))
+		return
 	}
 	res := service.DelStaff(uint(id))
 	c.JSON(200, res)
@@ -39,6 +40,7 @@ func GetStaffes(c *gin.Context) {
 	id, err := strconv.Atoi(s)
 	if err != nil {
 		c.JSON(200, ErrorResponse(nil))
+		return
 	}
 	res := service.GetStaffes(uint(id))
 	c.JSON(200, res)

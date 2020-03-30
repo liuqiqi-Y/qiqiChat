@@ -50,6 +50,10 @@ func NewRouter() *gin.Engine {
 			auth.GET("/products/:characteristic/infoByTime", api.GetProductByTime)
 			auth.PUT("/products/:characteristic/modification", api.ModifyProductCount)
 			auth.POST("/products/:characteristic/increasement", api.AddProduct)
+			auth.DELETE("/products/:characteristic/decreasement", api.DelProduct)
+			auth.PUT("/products/:characteristic/changeName", api.ModifyProductName)
+
+			auth.GET("/records/:characteristic/info", api.GetReceiveDetail)
 		}
 	}
 	return r
