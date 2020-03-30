@@ -40,3 +40,9 @@ Error: 2020/03/29 22:32:48 record.go:56: failed to query: Error 1054: Unknown co
 Error: 2020/03/29 22:40:34 record.go:58: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.`name` = 'Jerry' GROUP BY g.`name`, p.`name` HAVING p.`name` IN (SELECT ' at line 1
 Error: 2020/03/29 22:40:48 record.go:58: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.`name` = 'Jerry' GROUP BY g.`name`, p.`name` HAVING p.`name` IN (SELECT ' at line 1
 Error: 2020/03/29 22:41:34 record.go:58: failed to query: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.`name` = 'Jerry' GROUP BY g.`name`, p.`name` HAVING p.`name` IN (SELECT ' at line 1
+Error: 2020/03/30 11:25:22 product.go:125: failed to update: Error 1062: Duplicate entry '手机-0-0' for key 'name'
+Error: 2020/03/30 11:33:20 product.go:125: failed to update: Error 1062: Duplicate entry '手机-0-0' for key 'name'
+Error: 2020/03/30 11:34:04 product.go:125: failed to update: Error 1062: Duplicate entry '手机-0-0' for key 'name'
+Error: 2020/03/30 11:35:35 product.go:125: failed to update: Error 1062: Duplicate entry '手机-0-0' for key 'name'
+Error: 2020/03/30 11:48:11 product.go:88: failed to update
+Error: 2020/03/30 11:48:51 product.go:88: failed to update

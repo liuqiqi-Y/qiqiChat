@@ -86,13 +86,19 @@ func (p *ProductsByTime) GetProductsByTime() serializer.Response {
 
 type ProductCount struct {
 	ID    uint `form:"id" json:"id" binding:"required"`
-	Count int  `form:"count" json:"count" binding:"required"`
+	Count int  `form:"count" json:"count"`
 }
 
 func (p *ProductCount) ModifyProductCount() serializer.Response {
 	exist := model.CheckProductByID(p.ID)
 	if exist == false {
 		return serializer.Err(40003, "没有该物品", nil)
+	}
+	if p.Count == 0 {
+		return serializer.Response{
+			Code: 0,
+			Msg:  "无效的修改",
+		}
 	}
 	success := model.ModifyProductCount(p.ID, p.Count)
 	if success == false {
@@ -148,6 +154,13 @@ type ProductName struct {
 func (p *ProductName) ModifyProductName() serializer.Response {
 	if p.Character != 0 && p.Character != 1 {
 		return serializer.ParamErr("", nil)
+	}
+	if p.NewName == p.OldName {
+		return serializer.Response{
+			Code: 0,
+			Data: serializer.ProductEmpty{},
+			Msg:  "无效的修改",
+		}
 	}
 	exist := model.CheckProductByName(p.OldName, p.Character)
 	if exist == false {

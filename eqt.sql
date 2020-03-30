@@ -28,7 +28,6 @@ CREATE TABLE `product` (
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `status` tinyint NOT NULL COMMENT '状态 1存在 0删除',
-    UNIQUE (`name`, `characteristic`),
     PRIMARY KEY (`id`)
 )ENGINE = InnoDB CHARACTER SET = utf8mb4;
 CREATE TABLE `record` (
