@@ -149,6 +149,11 @@ func CheckProductCount(character int) int {
 
 func ModifyProductName(oldName string, newName string, character int) (Product, error) {
 	var product Product
+	if oldName == newName {
+		_ = DB.QueryRow("SELECT `id`, `name`, `characteristic`, `quantity`, `used`, `created_at`, `status` FROM `product` WHERE `status` = 1 AND `characteristic` = ?  AND `name` = ?", character, newName).Scan(
+			&product.ID, &product.Name, &product.Characteristic, &product.Quantity, &product.Used, &product.Created_at, &product.Status)
+		return product, nil
+	}
 	tx, _ := DB.Begin()
 	result, err := tx.Exec("UPDATE `product` SET `name` = ? WHERE `name` = ? AND `characteristic` = ? AND `status` = 1", newName, oldName, character)
 	if err != nil {

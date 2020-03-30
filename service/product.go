@@ -97,7 +97,7 @@ func (p *ProductCount) ModifyProductCount() serializer.Response {
 	if p.Count == 0 {
 		return serializer.Response{
 			Code: 0,
-			Msg:  "无效的修改",
+			Msg:  "修改成功",
 		}
 	}
 	success := model.ModifyProductCount(p.ID, p.Count)
@@ -155,13 +155,13 @@ func (p *ProductName) ModifyProductName() serializer.Response {
 	if p.Character != 0 && p.Character != 1 {
 		return serializer.ParamErr("", nil)
 	}
-	if p.NewName == p.OldName {
-		return serializer.Response{
-			Code: 0,
-			Data: serializer.ProductEmpty{},
-			Msg:  "无效的修改",
-		}
-	}
+	// if p.NewName == p.OldName {
+	// 	return serializer.Response{
+	// 		Code: 0,
+	// 		Data: serializer.ProductEmpty{},
+	// 		Msg:  "无效的修改",
+	// 	}
+	// }
 	exist := model.CheckProductByName(p.OldName, p.Character)
 	if exist == false {
 		return serializer.Err(40003, "无此类别，请重新输入。", nil)
