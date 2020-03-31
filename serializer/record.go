@@ -79,3 +79,9 @@ func RecordsResponse(records []model.Record) Response {
 		Data: recordArr,
 	}
 }
+
+type OneGourpOneProduct struct {
+	GroupName   string `json:"group_name,omitempty"`
+	ProductName string `json:"product_name,omitempty"`
+	Count       int    `json:"count,omitempty"`
+}

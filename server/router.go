@@ -59,6 +59,7 @@ func NewRouter() *gin.Engine {
 
 			auth.POST("/lowValue/setRecord", api.LowValueAddRecords)
 			auth.POST("/highValue/setRecord", api.HighValueAddRecords)
+			auth.GET("/highValue/oneGroupGetOneProductInfo", api.GetOneGroupOneProductInfo)
 		}
 	}
 	return r

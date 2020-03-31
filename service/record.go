@@ -3,6 +3,7 @@ package service
 import (
 	"qiqiChat/model"
 	"qiqiChat/serializer"
+	"reflect"
 	"regexp"
 	"time"
 )
@@ -166,9 +167,39 @@ func (r *Records) AddRecords1(character int) serializer.Response {
 	if err != nil {
 		return serializer.DBErr("", nil)
 	}
-	if records == nil {
-
+	if reflect.DeepEqual(records, []model.Record{}) {
+		return serializer.DBErr("", nil)
 	}
-
 	return serializer.RecordsResponse(records)
+}
+
+type GroupOneProductInfo struct {
+	ProductName string `form:"product_name" json:"product_name" binding:"required"`
+	GroupName   string `form:"group_name" json:"group_name" binding:"required"`
+	Character   int
+}
+
+func (g *GroupOneProductInfo) GetOneGroupOneProductInfo() serializer.Response {
+	gid := model.GetGroupIDByName(g.GroupName)
+	if gid == 0 {
+		return serializer.Err(40001, "没有这个分组", nil)
+	}
+	sids := model.GetStaffIDByGroupID(gid)
+	if len(sids) == 0 {
+		return serializer.Response{
+			Data: 0,
+		}
+	}
+	pid := model.CheckProductID(g.ProductName, g.Character)
+	if pid == 0 {
+		return serializer.Err(40001, "没有这个物品", nil)
+	}
+	count := model.GetOneGroupOneProductRecord(sids, pid)
+	return serializer.Response{
+		Data: serializer.OneGourpOneProduct{
+			GroupName:   g.GroupName,
+			ProductName: g.ProductName,
+			Count:       count,
+		},
+	}
 }

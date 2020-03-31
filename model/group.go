@@ -85,3 +85,8 @@ func CheckGroupByID(id uint) bool {
 	}
 	return false
 }
+func GetGroupIDByName(name string) uint {
+	count := 0
+	_ = DB.QueryRow("SELECT `id` FROM `group` WHERE `name` = ? AND `status` = 1", name).Scan(&count)
+	return uint(count)
+}

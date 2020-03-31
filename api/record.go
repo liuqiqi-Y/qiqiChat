@@ -84,7 +84,7 @@ func HighValueAddRecords(c *gin.Context) {
 	//fmt.Println(string(d))
 	err := c.ShouldBindJSON(&r)
 	if err != nil {
-		c.JSON(200, err)
+		c.JSON(200, ErrorResponse(err))
 		return
 	}
 	res := r.AddRecords1(1)
@@ -94,4 +94,15 @@ func HighValueAddRecords(c *gin.Context) {
 	//if err != nil {
 	//fmt.Printf("===>%v\n", r)
 	//}
+}
+func GetOneGroupOneProductInfo(c *gin.Context) {
+	var r service.GroupOneProductInfo
+	err := c.ShouldBind(&r)
+	if err != nil {
+		c.JSON(200, ErrorResponse(err))
+		return
+	}
+	r.Character = 1
+	res := r.GetOneGroupOneProductInfo()
+	c.JSON(200, res)
 }

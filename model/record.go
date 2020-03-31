@@ -303,3 +303,12 @@ func SetRecord1(rd []RecordData) ([]Record, error) {
 	_ = tx.Commit()
 	return arr, nil
 }
+func GetOneGroupOneProductRecord(staffID []uint, productID uint) int {
+	sum := 0
+	for _, v := range staffID {
+		count := 0
+		_ = DB.QueryRow("SELECT `count` FROM `fact_record` WHERE `staff_id` = ? AND `product_id` = ?", v, productID).Scan(&count)
+		sum += count
+	}
+	return sum
+}

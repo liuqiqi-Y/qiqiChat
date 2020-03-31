@@ -159,3 +159,17 @@ func CheckStaffByGroupID(id uint) bool {
 	}
 	return false
 }
+func GetStaffIDByGroupID(id uint) []uint {
+	var arr []uint
+	rows, _ := DB.Query("SELECT `id` FROM `staff` WHERE `group_id` = ? AND `status` = 1 ", id)
+	i := 0
+	for rows.Next() {
+		t := 0
+		_ = rows.Scan(&t)
+		if t != 0 {
+			arr = append(arr, uint(t))
+		}
+		i++
+	}
+	return arr
+}
