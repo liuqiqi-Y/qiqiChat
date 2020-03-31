@@ -59,3 +59,39 @@ func GetRecordExcel(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/octet-stream")
 	c.File(filePath)
 }
+func LowValueAddRecords(c *gin.Context) {
+	//var r service.Records
+	var r service.Records
+	//d, _ := c.GetRawData()
+	//fmt.Println(string(d))
+	err := c.ShouldBindJSON(&r)
+	if err != nil {
+		c.JSON(200, err)
+		return
+	}
+	res := r.AddRecords1(0)
+	c.JSON(200, res)
+	//_ = json.Unmarshal(d, &service.Records)
+	//fmt.Printf("===>%v\n", r)
+	//if err != nil {
+	//fmt.Printf("===>%v\n", r)
+	//}
+}
+func HighValueAddRecords(c *gin.Context) {
+	//var r service.Records
+	var r service.Records
+	//d, _ := c.GetRawData()
+	//fmt.Println(string(d))
+	err := c.ShouldBindJSON(&r)
+	if err != nil {
+		c.JSON(200, err)
+		return
+	}
+	res := r.AddRecords1(1)
+	c.JSON(200, res)
+	//_ = json.Unmarshal(d, &service.Records)
+	//fmt.Printf("===>%v\n", r)
+	//if err != nil {
+	//fmt.Printf("===>%v\n", r)
+	//}
+}

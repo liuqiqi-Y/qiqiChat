@@ -172,3 +172,9 @@ func ModifyProductName(oldName string, newName string, character int) (Product, 
 	tx.Commit()
 	return product, nil
 }
+
+func GetCountByID(id uint) int {
+	count := 0
+	_ = DB.QueryRow("SELECT `quantity` FROM `product` WHERE `id` = ?", id).Scan(&count)
+	return count
+}

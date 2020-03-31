@@ -49,3 +49,33 @@ func DetailsResponse(details []model.ReceiveDetail, total int, size int) Respons
 		Data: pl,
 	}
 }
+
+type Record struct {
+	ID        uint   `json:"id"`
+	StaffID   uint   `json:"staff_id"`
+	ProductID uint   `json:"product_id"`
+	Count     int    `json:"count"`
+	Type      int    `json:"type"`
+	Time      string `json:"time"`
+}
+
+func buildRecord(record model.Record) Record {
+	return Record{
+		ID:        record.ID,
+		StaffID:   record.StaffID,
+		ProductID: record.ProductID,
+		Count:     record.Count,
+		Type:      record.Type,
+		Time:      record.Time.Format("2006-01-02"),
+	}
+}
+func RecordsResponse(records []model.Record) Response {
+	var recordArr []Record
+	for _, v := range records {
+		r := buildRecord(v)
+		recordArr = append(recordArr, r)
+	}
+	return Response{
+		Data: recordArr,
+	}
+}

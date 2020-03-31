@@ -92,3 +92,83 @@ func (l *LeadOutTime) LeadingOut() (serializer.Response, string) {
 		Msg:  "导出文件成功",
 	}, filePath + "_record.xlsx"
 }
+
+type Record struct {
+	ProductName string `json:"product_name" binding:"required"`
+	Count       int    `json:"count" binding:"required"`
+	StaffName   string `json:"staff_name" binding:"required"`
+	GroupName   string `json:"group_name" binding:"required"`
+	Time        string `json:"time" binding:"required"`
+}
+
+type Records []Record
+
+func (r *Records) AddRecords(character int) serializer.Response {
+	if len(*r) == 0 {
+		return serializer.Response{}
+	}
+	var arr []model.Record
+	for _, v := range *r {
+		matched, _ := regexp.MatchString(`((((19|20)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((19|20)\d{2})-(0?[469]|11)-(0?[1-9]|[12]\d|30))|(((19|20)\d{2})-0?2-(0?[1-9]|1\d|2[0-8]))|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))-0?2-(0?[1-9]|[12]\d)))$`, v.Time)
+		if matched == false {
+			return serializer.Err(40001, "日期时间无效: "+v.Time, nil)
+		}
+		pid := model.CheckProductID(v.ProductName, character)
+		if pid == 0 {
+			return serializer.Err(40003, "没有该物品: "+v.ProductName, nil)
+		}
+		sid := model.CheckStaffID(v.StaffName, v.GroupName)
+		if sid == 0 {
+			return serializer.Err(40003, "没有该员工: "+v.StaffName, nil)
+		}
+		r, err := model.SetRecord(sid, pid, v.Count, v.Time)
+		if err != nil {
+			return serializer.DBErr("", nil)
+		}
+		if r == (model.Record{}) {
+			continue
+		}
+		arr = append(arr, r)
+	}
+	return serializer.RecordsResponse(arr)
+}
+
+func (r *Records) AddRecords1(character int) serializer.Response {
+	if len(*r) == 0 {
+		return serializer.Response{}
+	}
+	//var arr []model.Record
+	var rd []model.RecordData
+	for _, v := range *r {
+		rr := model.RecordData{}
+		matched, _ := regexp.MatchString(`((((19|20)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((19|20)\d{2})-(0?[469]|11)-(0?[1-9]|[12]\d|30))|(((19|20)\d{2})-0?2-(0?[1-9]|1\d|2[0-8]))|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))-0?2-(0?[1-9]|[12]\d)))$`, v.Time)
+		if matched == false {
+			return serializer.Err(40001, "日期时间无效: "+v.Time, nil)
+		}
+		pid := model.CheckProductID(v.ProductName, character)
+		if pid == 0 {
+			return serializer.Err(40003, "没有该物品: "+v.ProductName, nil)
+		}
+		sid := model.CheckStaffID(v.StaffName, v.GroupName)
+		if sid == 0 {
+			return serializer.Err(40003, "没有该员工: "+v.StaffName, nil)
+		}
+		if v.Count > model.GetCountByID(pid) {
+			return serializer.Err(40001, "库存不足: "+v.ProductName, nil)
+		}
+		rr.StaffID = sid
+		rr.ProductID = pid
+		rr.Count = v.Count
+		rr.Time = v.Time
+		rd = append(rd, rr)
+	}
+	records, err := model.SetRecord1(rd)
+	if err != nil {
+		return serializer.DBErr("", nil)
+	}
+	if records == nil {
+
+	}
+
+	return serializer.RecordsResponse(records)
+}
